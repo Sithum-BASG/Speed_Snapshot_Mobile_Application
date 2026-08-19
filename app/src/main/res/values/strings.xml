@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Speed Snapshot</string>
-    <string name="permission_status_checking">Checking location permission…</string>
+    <string name="speed_label">Speed: %.2f km/h</string>
+    <string name="accuracy_label">Accuracy: %.1f m</string>
+    <string name="speed_default">Speed: 0.00 m/s</string>
+    <string name="accuracy_default">Accuracy: -- m</string>
+    <string name="btn_start">Start</string>
+    <string name="btn_stop">Stop</string>
     <string name="permission_status_granted">Location permission granted. Ready for speed tracking.</string>
     <string name="permission_status_denied">Location permission denied. Speed tracking cannot start.</string>
     <string name="permission_status_rationale">Location access is required to measure speed and accuracy.</string>
