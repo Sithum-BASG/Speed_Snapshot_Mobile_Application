@@ -2,7 +2,7 @@
     <string name="app_name">Speed Snapshot</string>
     <string name="speed_label">Speed: %.2f km/h</string>
     <string name="accuracy_label">Accuracy: %.1f m</string>
-    <string name="speed_default">Speed: 0.00 m/s</string>
+    <string name="speed_default">Speed: 0.00 km/h</string>
     <string name="accuracy_default">Accuracy: -- m</string>
     <string name="btn_start">Start</string>
     <string name="btn_stop">Stop</string>

@@ -5,12 +5,16 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.google.android.gms.location.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import com.group4.speedsnapshot.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -46,28 +50,26 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupLocationUpdates()
-        checkAndRequestLocationPermission()
-
-        binding.btnStart.isEnabled = false
-        binding.btnStop.isEnabled = false
+        updateButtonState()
 
         binding.btnStart.setOnClickListener {
             if (isLocationPermissionGranted()) {
                 startLocationUpdates()
                 isTracking = true
-                binding.btnStart.isEnabled = false
-                binding.btnStop.isEnabled = true
+                updateButtonState()
             } else {
                 Toast.makeText(this, "Location permission is required to track speed.", Toast.LENGTH_SHORT).show()
+                checkAndRequestLocationPermission()
             }
         }
 
         binding.btnStop.setOnClickListener {
             stopLocationUpdates()
             isTracking = false
-            binding.btnStart.isEnabled = true
-            binding.btnStop.isEnabled = false
+            updateButtonState()
         }
+
+        checkAndRequestLocationPermission()
     }
 
     override fun onPause() {
@@ -76,8 +78,7 @@ class MainActivity : AppCompatActivity() {
             Log.d("MainActivity", "onPause: Stopping tracking")
             stopLocationUpdates()
             isTracking = false
-            binding.btnStart.isEnabled = isLocationPermissionGranted()
-            binding.btnStop.isEnabled = false
+            updateButtonState()
         }
     }
 
@@ -87,8 +88,7 @@ class MainActivity : AppCompatActivity() {
             Log.d("MainActivity", "onStop: Stopping tracking")
             stopLocationUpdates()
             isTracking = false
-            binding.btnStart.isEnabled = isLocationPermissionGranted()
-            binding.btnStop.isEnabled = false
+            updateButtonState()
         }
     }
 
@@ -151,12 +151,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onLocationPermissionGranted() {
-        binding.btnStart.isEnabled = true
+        updateButtonState()
     }
 
     private fun onLocationPermissionDenied() {
-        binding.btnStart.isEnabled = false
+        isTracking = false
+        updateButtonState()
         Toast.makeText(this, "Location permission is required to track speed.", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun updateButtonState() {
+        val granted = hasLocationPermission()
+        binding.btnStart.isEnabled = granted && !isTracking
+        binding.btnStop.isEnabled = granted && isTracking
     }
 
     fun isLocationPermissionGranted(): Boolean = hasLocationPermission()
