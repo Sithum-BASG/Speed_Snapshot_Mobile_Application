@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Speed Snapshot</string>
+    <string name="permission_status_checking">Checking location permission…</string>
+    <string name="permission_status_granted">Location permission granted. Ready for speed tracking.</string>
+    <string name="permission_status_denied">Location permission denied. Speed tracking cannot start.</string>
+    <string name="permission_status_rationale">Location access is required to measure speed and accuracy.</string>
+</resources>
